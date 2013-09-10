@@ -9,6 +9,4 @@ Scala is the last.
 
 I have learned C , C++ and Java, but it seems that I forgot all of them.
 
-Programming is not my final destination. Data analysis is, so I should 
-stop learning language.
 

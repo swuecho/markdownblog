@@ -29,7 +29,11 @@ On the host computer, ensure that the /etc/ssh/sshd_config contains the followin
 
 SELinux permissions prevented the SSH service from accessing the authorized_keys.
 
-Use restorecon -r /root/.ssh to restore permissions, or turn off SELinux completely.
+Use 
+
+    restorecon -r /root/.ssh 
+
+to restore permissions, or turn off SELinux completely.
 
 source: 
 

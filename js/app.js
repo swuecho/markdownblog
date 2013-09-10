@@ -8,7 +8,7 @@
                     url: href,
                     dataType: 'text',
                     success: function(data) {   
-                        $('#blog').html(converter.makeHtml(data));
+                        $('body').html(converter.makeHtml(data));
                     }
                 });
                 
