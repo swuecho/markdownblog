@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html>
+  <head>
+     <title>Bugzilla DB schema</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Bootstrap -->
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+   </head>
+<body>
+<div class="container">
+<center> <h1> Bugzilla DB schema </h1></center>
+<h3> list of tables </h3>
+<ul>
+<li> attach_data
+</li> 
+<li> attachments
+</li> 
+<li> audit_log
+</li> 
+<li> bug_group_map
+</li> 
+<li> bug_see_also
+</li> 
+<li> bug_severity
+</li> 
+<li> bug_status
+</li> 
+<li> bug_tag
+</li> 
+<li> bugs
+</li> 
+<li> bugs_activity
+</li> 
+<li> bugs_fulltext
+</li> 
+<li> bz_schema
+</li> 
+<li> category_group_map
+</li> 
+<li> cc
+</li> 
+<li> classifications
+</li> 
+<li> component_cc
+</li> 
+<li> components
+</li> 
+<li> dependencies
+</li> 
+<li> duplicates
+</li> 
+<li> email_setting
+</li> 
+<li> field_visibility
+</li> 
+<li> fielddefs
+</li> 
+<li> flagexclusions
+</li> 
+<li> flaginclusions
+</li> 
+<li> flags
+</li> 
+<li> flagtypes
+</li> 
+<li> group_control_map
+</li> 
+<li> group_group_map
+</li> 
+<li> groups
+</li> 
+<li> keyworddefs
+</li> 
+<li> keywords
+</li> 
+<li> login_failure
+</li> 
+<li> logincookies
+</li> 
+<li> longdescs
+</li> 
+<li> milestones
+</li> 
+<li> namedqueries
+</li> 
+<li> namedqueries_link_in_footer
+</li> 
+<li> namedquery_group_map
+</li> 
+<li> op_sys
+</li> 
+<li> priority
+</li> 
+<li> products
+</li> 
+<li> profile_search
+</li> 
+<li> profile_setting
+</li> 
+<li> profiles
+</li> 
+<li> profiles_activity
+</li> 
+<li> quips
+</li> 
+<li> rep_platform
+</li> 
+<li> reports
+</li> 
+<li> resolution
+</li> 
+<li> series
+</li> 
+<li> series_categories
+</li> 
+<li> series_data
+</li> 
+<li> setting
+</li> 
+<li> setting_value
+</li> 
+<li> status_workflow
+</li> 
+<li> tag
+</li> 
+<li> tokens
+</li> 
+<li> ts_error
+</li> 
+<li> ts_exitstatus
+</li> 
+<li> ts_funcmap
+</li> 
+<li> ts_job
+</li> 
+<li> ts_note
+</li> 
+<li> user_group_map
+</li> 
+<li> versions
+</li> 
+<li> watch
+</li> 
+<li> whine_events
+</li> 
+<li> whine_queries
+</li> 
+<li> whine_schedules
+</li> 
+
+</ul>
+
+<table class="table table-striped">
+<caption align="top">Schema for attach_data</caption>
+<tbody>
+<tr><td>id</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td></td></tr>
+<tr><td>thedata</td><td>longblob</td><td>NO</td><td></td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for attachments</caption>
+<tbody>
+<tr><td>attach_id</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td>auto_increment</td></tr>
+<tr><td>bug_id</td><td>mediumint(9)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>creation_ts</td><td>datetime</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>modification_time</td><td>datetime</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>description</td><td>tinytext</td><td>NO</td><td></td><td></td><td></td></tr>
+<tr><td>mimetype</td><td>tinytext</td><td>NO</td><td></td><td></td><td></td></tr>
+<tr><td>ispatch</td><td>tinyint(4)</td><td>NO</td><td></td><td>0</td><td></td></tr>
+<tr><td>filename</td><td>varchar(255)</td><td>NO</td><td></td><td></td><td></td></tr>
+<tr><td>submitter_id</td><td>mediumint(9)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>isobsolete</td><td>tinyint(4)</td><td>NO</td><td></td><td>0</td><td></td></tr>
+<tr><td>isprivate</td><td>tinyint(4)</td><td>NO</td><td></td><td>0</td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for audit_log</caption>
+<tbody>
+<tr><td>user_id</td><td>mediumint(9)</td><td>YES</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>class</td><td>varchar(255)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>object_id</td><td>int(11)</td><td>NO</td><td></td><td></td><td></td></tr>
+<tr><td>field</td><td>varchar(64)</td><td>NO</td><td></td><td></td><td></td></tr>
+<tr><td>removed</td><td>mediumtext</td><td>YES</td><td></td><td></td><td></td></tr>
+<tr><td>added</td><td>mediumtext</td><td>YES</td><td></td><td></td><td></td></tr>
+<tr><td>at_time</td><td>datetime</td><td>NO</td><td></td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for bug_group_map</caption>
+<tbody>
+<tr><td>bug_id</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td></td></tr>
+<tr><td>group_id</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for bug_see_also</caption>
+<tbody>
+<tr><td>id</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td>auto_increment</td></tr>
+<tr><td>bug_id</td><td>mediumint(9)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>value</td><td>varchar(255)</td><td>NO</td><td></td><td></td><td></td></tr>
+<tr><td>class</td><td>varchar(255)</td><td>NO</td><td></td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for bug_severity</caption>
+<tbody>
+<tr><td>id</td><td>smallint(6)</td><td>NO</td><td>PRI</td><td></td><td>auto_increment</td></tr>
+<tr><td>value</td><td>varchar(64)</td><td>NO</td><td>UNI</td><td></td><td></td></tr>
+<tr><td>sortkey</td><td>smallint(6)</td><td>NO</td><td>MUL</td><td>0</td><td></td></tr>
+<tr><td>isactive</td><td>tinyint(4)</td><td>NO</td><td></td><td>1</td><td></td></tr>
+<tr><td>visibility_value_id</td><td>smallint(6)</td><td>YES</td><td>MUL</td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for bug_status</caption>
+<tbody>
+<tr><td>id</td><td>smallint(6)</td><td>NO</td><td>PRI</td><td></td><td>auto_increment</td></tr>
+<tr><td>value</td><td>varchar(64)</td><td>NO</td><td>UNI</td><td></td><td></td></tr>
+<tr><td>sortkey</td><td>smallint(6)</td><td>NO</td><td>MUL</td><td>0</td><td></td></tr>
+<tr><td>isactive</td><td>tinyint(4)</td><td>NO</td><td></td><td>1</td><td></td></tr>
+<tr><td>visibility_value_id</td><td>smallint(6)</td><td>YES</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>is_open</td><td>tinyint(4)</td><td>NO</td><td></td><td>1</td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for bug_tag</caption>
+<tbody>
+<tr><td>bug_id</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td></td></tr>
+<tr><td>tag_id</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for bugs</caption>
+<tbody>
+<tr><td>bug_id</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td>auto_increment</td></tr>
+<tr><td>assigned_to</td><td>mediumint(9)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>bug_file_loc</td><td>mediumtext</td><td>NO</td><td></td><td></td><td></td></tr>
+<tr><td>bug_severity</td><td>varchar(64)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>bug_status</td><td>varchar(64)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>creation_ts</td><td>datetime</td><td>YES</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>delta_ts</td><td>datetime</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>short_desc</td><td>varchar(255)</td><td>NO</td><td></td><td></td><td></td></tr>
+<tr><td>op_sys</td><td>varchar(64)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>priority</td><td>varchar(64)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>product_id</td><td>smallint(6)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>rep_platform</td><td>varchar(64)</td><td>NO</td><td></td><td></td><td></td></tr>
+<tr><td>reporter</td><td>mediumint(9)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>version</td><td>varchar(64)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>component_id</td><td>smallint(6)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>resolution</td><td>varchar(64)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>target_milestone</td><td>varchar(64)</td><td>NO</td><td>MUL</td><td>---</td><td></td></tr>
+<tr><td>qa_contact</td><td>mediumint(9)</td><td>YES</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>status_whiteboard</td><td>mediumtext</td><td>NO</td><td></td><td></td><td></td></tr>
+<tr><td>lastdiffed</td><td>datetime</td><td>YES</td><td></td><td></td><td></td></tr>
+<tr><td>everconfirmed</td><td>tinyint(4)</td><td>NO</td><td></td><td></td><td></td></tr>
+<tr><td>reporter_accessible</td><td>tinyint(4)</td><td>NO</td><td></td><td>1</td><td></td></tr>
+<tr><td>cclist_accessible</td><td>tinyint(4)</td><td>NO</td><td></td><td>1</td><td></td></tr>
+<tr><td>estimated_time</td><td>decimal(7,2)</td><td>NO</td><td></td><td>0.00</td><td></td></tr>
+<tr><td>remaining_time</td><td>decimal(7,2)</td><td>NO</td><td></td><td>0.00</td><td></td></tr>
+<tr><td>deadline</td><td>datetime</td><td>YES</td><td></td><td></td><td></td></tr>
+<tr><td>alias</td><td>varchar(20)</td><td>YES</td><td>UNI</td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for bugs_activity</caption>
+<tbody>
+<tr><td>id</td><td>int(11)</td><td>NO</td><td>PRI</td><td></td><td>auto_increment</td></tr>
+<tr><td>bug_id</td><td>mediumint(9)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>attach_id</td><td>mediumint(9)</td><td>YES</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>who</td><td>mediumint(9)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>bug_when</td><td>datetime</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>fieldid</td><td>mediumint(9)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>added</td><td>varchar(255)</td><td>YES</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>removed</td><td>varchar(255)</td><td>YES</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>comment_id</td><td>int(11)</td><td>YES</td><td>MUL</td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for bugs_fulltext</caption>
+<tbody>
+<tr><td>bug_id</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td></td></tr>
+<tr><td>short_desc</td><td>varchar(255)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>comments</td><td>mediumtext</td><td>YES</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>comments_noprivate</td><td>mediumtext</td><td>YES</td><td>MUL</td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for bz_schema</caption>
+<tbody>
+<tr><td>schema_data</td><td>longblob</td><td>NO</td><td></td><td></td><td></td></tr>
+<tr><td>version</td><td>decimal(3,2)</td><td>NO</td><td></td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for category_group_map</caption>
+<tbody>
+<tr><td>category_id</td><td>smallint(6)</td><td>NO</td><td>PRI</td><td></td><td></td></tr>
+<tr><td>group_id</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for cc</caption>
+<tbody>
+<tr><td>bug_id</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td></td></tr>
+<tr><td>who</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for classifications</caption>
+<tbody>
+<tr><td>id</td><td>smallint(6)</td><td>NO</td><td>PRI</td><td></td><td>auto_increment</td></tr>
+<tr><td>name</td><td>varchar(64)</td><td>NO</td><td>UNI</td><td></td><td></td></tr>
+<tr><td>description</td><td>mediumtext</td><td>YES</td><td></td><td></td><td></td></tr>
+<tr><td>sortkey</td><td>smallint(6)</td><td>NO</td><td></td><td>0</td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for component_cc</caption>
+<tbody>
+<tr><td>user_id</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td></td></tr>
+<tr><td>component_id</td><td>smallint(6)</td><td>NO</td><td>PRI</td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for components</caption>
+<tbody>
+<tr><td>id</td><td>smallint(6)</td><td>NO</td><td>PRI</td><td></td><td>auto_increment</td></tr>
+<tr><td>name</td><td>varchar(64)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>product_id</td><td>smallint(6)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>initialowner</td><td>mediumint(9)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>initialqacontact</td><td>mediumint(9)</td><td>YES</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>description</td><td>mediumtext</td><td>NO</td><td></td><td></td><td></td></tr>
+<tr><td>isactive</td><td>tinyint(4)</td><td>NO</td><td></td><td>1</td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for dependencies</caption>
+<tbody>
+<tr><td>blocked</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td></td></tr>
+<tr><td>dependson</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for duplicates</caption>
+<tbody>
+<tr><td>dupe_of</td><td>mediumint(9)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>dupe</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for email_setting</caption>
+<tbody>
+<tr><td>user_id</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td></td></tr>
+<tr><td>relationship</td><td>tinyint(4)</td><td>NO</td><td>PRI</td><td></td><td></td></tr>
+<tr><td>event</td><td>tinyint(4)</td><td>NO</td><td>PRI</td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for field_visibility</caption>
+<tbody>
+<tr><td>field_id</td><td>mediumint(9)</td><td>YES</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>value_id</td><td>smallint(6)</td><td>NO</td><td></td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for fielddefs</caption>
+<tbody>
+<tr><td>id</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td>auto_increment</td></tr>
+<tr><td>name</td><td>varchar(64)</td><td>NO</td><td>UNI</td><td></td><td></td></tr>
+<tr><td>type</td><td>smallint(6)</td><td>NO</td><td></td><td>0</td><td></td></tr>
+<tr><td>custom</td><td>tinyint(4)</td><td>NO</td><td></td><td>0</td><td></td></tr>
+<tr><td>description</td><td>tinytext</td><td>NO</td><td></td><td></td><td></td></tr>
+<tr><td>long_desc</td><td>varchar(255)</td><td>NO</td><td></td><td></td><td></td></tr>
+<tr><td>mailhead</td><td>tinyint(4)</td><td>NO</td><td></td><td>0</td><td></td></tr>
+<tr><td>sortkey</td><td>smallint(6)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>obsolete</td><td>tinyint(4)</td><td>NO</td><td></td><td>0</td><td></td></tr>
+<tr><td>enter_bug</td><td>tinyint(4)</td><td>NO</td><td></td><td>0</td><td></td></tr>
+<tr><td>buglist</td><td>tinyint(4)</td><td>NO</td><td></td><td>0</td><td></td></tr>
+<tr><td>visibility_field_id</td><td>mediumint(9)</td><td>YES</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>value_field_id</td><td>mediumint(9)</td><td>YES</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>reverse_desc</td><td>tinytext</td><td>YES</td><td></td><td></td><td></td></tr>
+<tr><td>is_mandatory</td><td>tinyint(4)</td><td>NO</td><td>MUL</td><td>0</td><td></td></tr>
+<tr><td>is_numeric</td><td>tinyint(4)</td><td>NO</td><td></td><td>0</td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for flagexclusions</caption>
+<tbody>
+<tr><td>type_id</td><td>smallint(6)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>product_id</td><td>smallint(6)</td><td>YES</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>component_id</td><td>smallint(6)</td><td>YES</td><td>MUL</td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for flaginclusions</caption>
+<tbody>
+<tr><td>type_id</td><td>smallint(6)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>product_id</td><td>smallint(6)</td><td>YES</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>component_id</td><td>smallint(6)</td><td>YES</td><td>MUL</td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for flags</caption>
+<tbody>
+<tr><td>id</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td>auto_increment</td></tr>
+<tr><td>type_id</td><td>smallint(6)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>status</td><td>char(1)</td><td>NO</td><td></td><td></td><td></td></tr>
+<tr><td>bug_id</td><td>mediumint(9)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>attach_id</td><td>mediumint(9)</td><td>YES</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>creation_date</td><td>datetime</td><td>NO</td><td></td><td></td><td></td></tr>
+<tr><td>modification_date</td><td>datetime</td><td>YES</td><td></td><td></td><td></td></tr>
+<tr><td>setter_id</td><td>mediumint(9)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>requestee_id</td><td>mediumint(9)</td><td>YES</td><td>MUL</td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for flagtypes</caption>
+<tbody>
+<tr><td>id</td><td>smallint(6)</td><td>NO</td><td>PRI</td><td></td><td>auto_increment</td></tr>
+<tr><td>name</td><td>varchar(50)</td><td>NO</td><td></td><td></td><td></td></tr>
+<tr><td>description</td><td>mediumtext</td><td>NO</td><td></td><td></td><td></td></tr>
+<tr><td>cc_list</td><td>varchar(200)</td><td>YES</td><td></td><td></td><td></td></tr>
+<tr><td>target_type</td><td>char(1)</td><td>NO</td><td></td><td>b</td><td></td></tr>
+<tr><td>is_active</td><td>tinyint(4)</td><td>NO</td><td></td><td>1</td><td></td></tr>
+<tr><td>is_requestable</td><td>tinyint(4)</td><td>NO</td><td></td><td>0</td><td></td></tr>
+<tr><td>is_requesteeble</td><td>tinyint(4)</td><td>NO</td><td></td><td>0</td><td></td></tr>
+<tr><td>is_multiplicable</td><td>tinyint(4)</td><td>NO</td><td></td><td>0</td><td></td></tr>
+<tr><td>sortkey</td><td>smallint(6)</td><td>NO</td><td></td><td>0</td><td></td></tr>
+<tr><td>grant_group_id</td><td>mediumint(9)</td><td>YES</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>request_group_id</td><td>mediumint(9)</td><td>YES</td><td>MUL</td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for group_control_map</caption>
+<tbody>
+<tr><td>group_id</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td></td></tr>
+<tr><td>product_id</td><td>smallint(6)</td><td>NO</td><td>PRI</td><td></td><td></td></tr>
+<tr><td>entry</td><td>tinyint(4)</td><td>NO</td><td></td><td>0</td><td></td></tr>
+<tr><td>membercontrol</td><td>tinyint(4)</td><td>NO</td><td></td><td>0</td><td></td></tr>
+<tr><td>othercontrol</td><td>tinyint(4)</td><td>NO</td><td></td><td>0</td><td></td></tr>
+<tr><td>canedit</td><td>tinyint(4)</td><td>NO</td><td></td><td>0</td><td></td></tr>
+<tr><td>editcomponents</td><td>tinyint(4)</td><td>NO</td><td></td><td>0</td><td></td></tr>
+<tr><td>editbugs</td><td>tinyint(4)</td><td>NO</td><td></td><td>0</td><td></td></tr>
+<tr><td>canconfirm</td><td>tinyint(4)</td><td>NO</td><td></td><td>0</td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for group_group_map</caption>
+<tbody>
+<tr><td>member_id</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td></td></tr>
+<tr><td>grantor_id</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td></td></tr>
+<tr><td>grant_type</td><td>tinyint(4)</td><td>NO</td><td>PRI</td><td>0</td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for groups</caption>
+<tbody>
+<tr><td>id</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td>auto_increment</td></tr>
+<tr><td>name</td><td>varchar(255)</td><td>NO</td><td>UNI</td><td></td><td></td></tr>
+<tr><td>description</td><td>mediumtext</td><td>NO</td><td></td><td></td><td></td></tr>
+<tr><td>isbuggroup</td><td>tinyint(4)</td><td>NO</td><td></td><td></td><td></td></tr>
+<tr><td>userregexp</td><td>tinytext</td><td>NO</td><td></td><td></td><td></td></tr>
+<tr><td>isactive</td><td>tinyint(4)</td><td>NO</td><td></td><td>1</td><td></td></tr>
+<tr><td>icon_url</td><td>tinytext</td><td>YES</td><td></td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for keyworddefs</caption>
+<tbody>
+<tr><td>id</td><td>smallint(6)</td><td>NO</td><td>PRI</td><td></td><td>auto_increment</td></tr>
+<tr><td>name</td><td>varchar(64)</td><td>NO</td><td>UNI</td><td></td><td></td></tr>
+<tr><td>description</td><td>mediumtext</td><td>NO</td><td></td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for keywords</caption>
+<tbody>
+<tr><td>bug_id</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td></td></tr>
+<tr><td>keywordid</td><td>smallint(6)</td><td>NO</td><td>PRI</td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for login_failure</caption>
+<tbody>
+<tr><td>user_id</td><td>mediumint(9)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>login_time</td><td>datetime</td><td>NO</td><td></td><td></td><td></td></tr>
+<tr><td>ip_addr</td><td>varchar(40)</td><td>NO</td><td></td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for logincookies</caption>
+<tbody>
+<tr><td>cookie</td><td>varchar(16)</td><td>NO</td><td>PRI</td><td></td><td></td></tr>
+<tr><td>userid</td><td>mediumint(9)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>ipaddr</td><td>varchar(40)</td><td>YES</td><td></td><td></td><td></td></tr>
+<tr><td>lastused</td><td>datetime</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for longdescs</caption>
+<tbody>
+<tr><td>comment_id</td><td>int(11)</td><td>NO</td><td>PRI</td><td></td><td>auto_increment</td></tr>
+<tr><td>bug_id</td><td>mediumint(9)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>who</td><td>mediumint(9)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>bug_when</td><td>datetime</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>work_time</td><td>decimal(7,2)</td><td>NO</td><td></td><td>0.00</td><td></td></tr>
+<tr><td>thetext</td><td>mediumtext</td><td>NO</td><td></td><td></td><td></td></tr>
+<tr><td>isprivate</td><td>tinyint(4)</td><td>NO</td><td></td><td>0</td><td></td></tr>
+<tr><td>already_wrapped</td><td>tinyint(4)</td><td>NO</td><td></td><td>0</td><td></td></tr>
+<tr><td>type</td><td>smallint(6)</td><td>NO</td><td></td><td>0</td><td></td></tr>
+<tr><td>extra_data</td><td>varchar(255)</td><td>YES</td><td></td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for milestones</caption>
+<tbody>
+<tr><td>id</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td>auto_increment</td></tr>
+<tr><td>product_id</td><td>smallint(6)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>value</td><td>varchar(64)</td><td>NO</td><td></td><td></td><td></td></tr>
+<tr><td>sortkey</td><td>smallint(6)</td><td>NO</td><td></td><td>0</td><td></td></tr>
+<tr><td>isactive</td><td>tinyint(4)</td><td>NO</td><td></td><td>1</td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for namedqueries</caption>
+<tbody>
+<tr><td>id</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td>auto_increment</td></tr>
+<tr><td>userid</td><td>mediumint(9)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>name</td><td>varchar(64)</td><td>NO</td><td></td><td></td><td></td></tr>
+<tr><td>query</td><td>mediumtext</td><td>NO</td><td></td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for namedqueries_link_in_footer</caption>
+<tbody>
+<tr><td>namedquery_id</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td></td></tr>
+<tr><td>user_id</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for namedquery_group_map</caption>
+<tbody>
+<tr><td>namedquery_id</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td></td></tr>
+<tr><td>group_id</td><td>mediumint(9)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for op_sys</caption>
+<tbody>
+<tr><td>id</td><td>smallint(6)</td><td>NO</td><td>PRI</td><td></td><td>auto_increment</td></tr>
+<tr><td>value</td><td>varchar(64)</td><td>NO</td><td>UNI</td><td></td><td></td></tr>
+<tr><td>sortkey</td><td>smallint(6)</td><td>NO</td><td>MUL</td><td>0</td><td></td></tr>
+<tr><td>isactive</td><td>tinyint(4)</td><td>NO</td><td></td><td>1</td><td></td></tr>
+<tr><td>visibility_value_id</td><td>smallint(6)</td><td>YES</td><td>MUL</td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for priority</caption>
+<tbody>
+<tr><td>id</td><td>smallint(6)</td><td>NO</td><td>PRI</td><td></td><td>auto_increment</td></tr>
+<tr><td>value</td><td>varchar(64)</td><td>NO</td><td>UNI</td><td></td><td></td></tr>
+<tr><td>sortkey</td><td>smallint(6)</td><td>NO</td><td>MUL</td><td>0</td><td></td></tr>
+<tr><td>isactive</td><td>tinyint(4)</td><td>NO</td><td></td><td>1</td><td></td></tr>
+<tr><td>visibility_value_id</td><td>smallint(6)</td><td>YES</td><td>MUL</td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for products</caption>
+<tbody>
+<tr><td>id</td><td>smallint(6)</td><td>NO</td><td>PRI</td><td></td><td>auto_increment</td></tr>
+<tr><td>name</td><td>varchar(64)</td><td>NO</td><td>UNI</td><td></td><td></td></tr>
+<tr><td>classification_id</td><td>smallint(6)</td><td>NO</td><td>MUL</td><td>1</td><td></td></tr>
+<tr><td>description</td><td>mediumtext</td><td>NO</td><td></td><td></td><td></td></tr>
+<tr><td>isactive</td><td>tinyint(4)</td><td>NO</td><td></td><td>1</td><td></td></tr>
+<tr><td>defaultmilestone</td><td>varchar(64)</td><td>NO</td><td></td><td>---</td><td></td></tr>
+<tr><td>allows_unconfirmed</td><td>tinyint(4)</td><td>NO</td><td></td><td>1</td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for profile_search</caption>
+<tbody>
+<tr><td>id</td><td>int(11)</td><td>NO</td><td>PRI</td><td></td><td>auto_increment</td></tr>
+<tr><td>user_id</td><td>mediumint(9)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>bug_list</td><td>mediumtext</td><td>NO</td><td></td><td></td><td></td></tr>
+<tr><td>list_order</td><td>mediumtext</td><td>YES</td><td></td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for profile_setting</caption>
+<tbody>
+<tr><td>user_id</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td></td></tr>
+<tr><td>setting_name</td><td>varchar(32)</td><td>NO</td><td>PRI</td><td></td><td></td></tr>
+<tr><td>setting_value</td><td>varchar(32)</td><td>NO</td><td></td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for profiles</caption>
+<tbody>
+<tr><td>userid</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td>auto_increment</td></tr>
+<tr><td>login_name</td><td>varchar(255)</td><td>NO</td><td>UNI</td><td></td><td></td></tr>
+<tr><td>cryptpassword</td><td>varchar(128)</td><td>YES</td><td></td><td></td><td></td></tr>
+<tr><td>realname</td><td>varchar(255)</td><td>NO</td><td></td><td></td><td></td></tr>
+<tr><td>disabledtext</td><td>mediumtext</td><td>NO</td><td></td><td></td><td></td></tr>
+<tr><td>disable_mail</td><td>tinyint(4)</td><td>NO</td><td></td><td>0</td><td></td></tr>
+<tr><td>mybugslink</td><td>tinyint(4)</td><td>NO</td><td></td><td>1</td><td></td></tr>
+<tr><td>extern_id</td><td>varchar(64)</td><td>YES</td><td>UNI</td><td></td><td></td></tr>
+<tr><td>is_enabled</td><td>tinyint(4)</td><td>NO</td><td></td><td>1</td><td></td></tr>
+<tr><td>last_seen_date</td><td>datetime</td><td>YES</td><td></td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for profiles_activity</caption>
+<tbody>
+<tr><td>id</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td>auto_increment</td></tr>
+<tr><td>userid</td><td>mediumint(9)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>who</td><td>mediumint(9)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>profiles_when</td><td>datetime</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>fieldid</td><td>mediumint(9)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>oldvalue</td><td>tinytext</td><td>YES</td><td></td><td></td><td></td></tr>
+<tr><td>newvalue</td><td>tinytext</td><td>YES</td><td></td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for quips</caption>
+<tbody>
+<tr><td>quipid</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td>auto_increment</td></tr>
+<tr><td>userid</td><td>mediumint(9)</td><td>YES</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>quip</td><td>varchar(512)</td><td>NO</td><td></td><td></td><td></td></tr>
+<tr><td>approved</td><td>tinyint(4)</td><td>NO</td><td></td><td>1</td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for rep_platform</caption>
+<tbody>
+<tr><td>id</td><td>smallint(6)</td><td>NO</td><td>PRI</td><td></td><td>auto_increment</td></tr>
+<tr><td>value</td><td>varchar(64)</td><td>NO</td><td>UNI</td><td></td><td></td></tr>
+<tr><td>sortkey</td><td>smallint(6)</td><td>NO</td><td>MUL</td><td>0</td><td></td></tr>
+<tr><td>isactive</td><td>tinyint(4)</td><td>NO</td><td></td><td>1</td><td></td></tr>
+<tr><td>visibility_value_id</td><td>smallint(6)</td><td>YES</td><td>MUL</td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for reports</caption>
+<tbody>
+<tr><td>id</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td>auto_increment</td></tr>
+<tr><td>user_id</td><td>mediumint(9)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>name</td><td>varchar(64)</td><td>NO</td><td></td><td></td><td></td></tr>
+<tr><td>query</td><td>mediumtext</td><td>NO</td><td></td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for resolution</caption>
+<tbody>
+<tr><td>id</td><td>smallint(6)</td><td>NO</td><td>PRI</td><td></td><td>auto_increment</td></tr>
+<tr><td>value</td><td>varchar(64)</td><td>NO</td><td>UNI</td><td></td><td></td></tr>
+<tr><td>sortkey</td><td>smallint(6)</td><td>NO</td><td>MUL</td><td>0</td><td></td></tr>
+<tr><td>isactive</td><td>tinyint(4)</td><td>NO</td><td></td><td>1</td><td></td></tr>
+<tr><td>visibility_value_id</td><td>smallint(6)</td><td>YES</td><td>MUL</td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for series</caption>
+<tbody>
+<tr><td>series_id</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td>auto_increment</td></tr>
+<tr><td>creator</td><td>mediumint(9)</td><td>YES</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>category</td><td>smallint(6)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>subcategory</td><td>smallint(6)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>name</td><td>varchar(64)</td><td>NO</td><td></td><td></td><td></td></tr>
+<tr><td>frequency</td><td>smallint(6)</td><td>NO</td><td></td><td></td><td></td></tr>
+<tr><td>query</td><td>mediumtext</td><td>NO</td><td></td><td></td><td></td></tr>
+<tr><td>is_public</td><td>tinyint(4)</td><td>NO</td><td></td><td>0</td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for series_categories</caption>
+<tbody>
+<tr><td>id</td><td>smallint(6)</td><td>NO</td><td>PRI</td><td></td><td>auto_increment</td></tr>
+<tr><td>name</td><td>varchar(64)</td><td>NO</td><td>UNI</td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for series_data</caption>
+<tbody>
+<tr><td>series_id</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td></td></tr>
+<tr><td>series_date</td><td>datetime</td><td>NO</td><td>PRI</td><td></td><td></td></tr>
+<tr><td>series_value</td><td>mediumint(9)</td><td>NO</td><td></td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for setting</caption>
+<tbody>
+<tr><td>name</td><td>varchar(32)</td><td>NO</td><td>PRI</td><td></td><td></td></tr>
+<tr><td>default_value</td><td>varchar(32)</td><td>NO</td><td></td><td></td><td></td></tr>
+<tr><td>is_enabled</td><td>tinyint(4)</td><td>NO</td><td></td><td>1</td><td></td></tr>
+<tr><td>subclass</td><td>varchar(32)</td><td>YES</td><td></td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for setting_value</caption>
+<tbody>
+<tr><td>name</td><td>varchar(32)</td><td>NO</td><td>PRI</td><td></td><td></td></tr>
+<tr><td>value</td><td>varchar(32)</td><td>NO</td><td>PRI</td><td></td><td></td></tr>
+<tr><td>sortindex</td><td>smallint(6)</td><td>NO</td><td></td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for status_workflow</caption>
+<tbody>
+<tr><td>old_status</td><td>smallint(6)</td><td>YES</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>new_status</td><td>smallint(6)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>require_comment</td><td>tinyint(4)</td><td>NO</td><td></td><td>0</td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for tag</caption>
+<tbody>
+<tr><td>id</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td>auto_increment</td></tr>
+<tr><td>name</td><td>varchar(64)</td><td>NO</td><td></td><td></td><td></td></tr>
+<tr><td>user_id</td><td>mediumint(9)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for tokens</caption>
+<tbody>
+<tr><td>userid</td><td>mediumint(9)</td><td>YES</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>issuedate</td><td>datetime</td><td>NO</td><td></td><td></td><td></td></tr>
+<tr><td>token</td><td>varchar(16)</td><td>NO</td><td>PRI</td><td></td><td></td></tr>
+<tr><td>tokentype</td><td>varchar(8)</td><td>NO</td><td></td><td></td><td></td></tr>
+<tr><td>eventdata</td><td>tinytext</td><td>YES</td><td></td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for ts_error</caption>
+<tbody>
+<tr><td>error_time</td><td>int(11)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>jobid</td><td>int(11)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>message</td><td>varchar(255)</td><td>NO</td><td></td><td></td><td></td></tr>
+<tr><td>funcid</td><td>int(11)</td><td>NO</td><td>MUL</td><td>0</td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for ts_exitstatus</caption>
+<tbody>
+<tr><td>jobid</td><td>int(11)</td><td>NO</td><td>PRI</td><td></td><td>auto_increment</td></tr>
+<tr><td>funcid</td><td>int(11)</td><td>NO</td><td>MUL</td><td>0</td><td></td></tr>
+<tr><td>status</td><td>smallint(6)</td><td>YES</td><td></td><td></td><td></td></tr>
+<tr><td>completion_time</td><td>int(11)</td><td>YES</td><td></td><td></td><td></td></tr>
+<tr><td>delete_after</td><td>int(11)</td><td>YES</td><td>MUL</td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for ts_funcmap</caption>
+<tbody>
+<tr><td>funcid</td><td>int(11)</td><td>NO</td><td>PRI</td><td></td><td>auto_increment</td></tr>
+<tr><td>funcname</td><td>varchar(255)</td><td>NO</td><td>UNI</td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for ts_job</caption>
+<tbody>
+<tr><td>jobid</td><td>int(11)</td><td>NO</td><td>PRI</td><td></td><td>auto_increment</td></tr>
+<tr><td>funcid</td><td>int(11)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>arg</td><td>longblob</td><td>YES</td><td></td><td></td><td></td></tr>
+<tr><td>uniqkey</td><td>varchar(255)</td><td>YES</td><td></td><td></td><td></td></tr>
+<tr><td>insert_time</td><td>int(11)</td><td>YES</td><td></td><td></td><td></td></tr>
+<tr><td>run_after</td><td>int(11)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>grabbed_until</td><td>int(11)</td><td>NO</td><td></td><td></td><td></td></tr>
+<tr><td>priority</td><td>smallint(6)</td><td>YES</td><td></td><td></td><td></td></tr>
+<tr><td>coalesce</td><td>varchar(255)</td><td>YES</td><td>MUL</td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for ts_note</caption>
+<tbody>
+<tr><td>jobid</td><td>int(11)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>notekey</td><td>varchar(255)</td><td>YES</td><td></td><td></td><td></td></tr>
+<tr><td>value</td><td>longblob</td><td>YES</td><td></td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for user_group_map</caption>
+<tbody>
+<tr><td>user_id</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td></td></tr>
+<tr><td>group_id</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td></td></tr>
+<tr><td>isbless</td><td>tinyint(4)</td><td>NO</td><td>PRI</td><td>0</td><td></td></tr>
+<tr><td>grant_type</td><td>tinyint(4)</td><td>NO</td><td>PRI</td><td>0</td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for versions</caption>
+<tbody>
+<tr><td>id</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td>auto_increment</td></tr>
+<tr><td>value</td><td>varchar(64)</td><td>NO</td><td></td><td></td><td></td></tr>
+<tr><td>product_id</td><td>smallint(6)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>isactive</td><td>tinyint(4)</td><td>NO</td><td></td><td>1</td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for watch</caption>
+<tbody>
+<tr><td>watcher</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td></td></tr>
+<tr><td>watched</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for whine_events</caption>
+<tbody>
+<tr><td>id</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td>auto_increment</td></tr>
+<tr><td>owner_userid</td><td>mediumint(9)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>subject</td><td>varchar(128)</td><td>YES</td><td></td><td></td><td></td></tr>
+<tr><td>body</td><td>mediumtext</td><td>YES</td><td></td><td></td><td></td></tr>
+<tr><td>mailifnobugs</td><td>tinyint(4)</td><td>NO</td><td></td><td>0</td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for whine_queries</caption>
+<tbody>
+<tr><td>id</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td>auto_increment</td></tr>
+<tr><td>eventid</td><td>mediumint(9)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>query_name</td><td>varchar(64)</td><td>NO</td><td></td><td></td><td></td></tr>
+<tr><td>sortkey</td><td>smallint(6)</td><td>NO</td><td></td><td>0</td><td></td></tr>
+<tr><td>onemailperbug</td><td>tinyint(4)</td><td>NO</td><td></td><td>0</td><td></td></tr>
+<tr><td>title</td><td>varchar(128)</td><td>NO</td><td></td><td></td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+
+<table class="table table-striped">
+<caption align="top">Schema for whine_schedules</caption>
+<tbody>
+<tr><td>id</td><td>mediumint(9)</td><td>NO</td><td>PRI</td><td></td><td>auto_increment</td></tr>
+<tr><td>eventid</td><td>mediumint(9)</td><td>NO</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>run_day</td><td>varchar(32)</td><td>YES</td><td></td><td></td><td></td></tr>
+<tr><td>run_time</td><td>varchar(32)</td><td>YES</td><td></td><td></td><td></td></tr>
+<tr><td>run_next</td><td>datetime</td><td>YES</td><td>MUL</td><td></td><td></td></tr>
+<tr><td>mailto</td><td>mediumint(9)</td><td>NO</td><td></td><td></td><td></td></tr>
+<tr><td>mailto_type</td><td>smallint(6)</td><td>NO</td><td></td><td>0</td><td></td></tr>
+</tbody>
+</table>
+<hr/>
+<div>
+</body>
+</html>
